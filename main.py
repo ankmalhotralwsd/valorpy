@@ -18,7 +18,7 @@ CYAN = (0, 255, 255)
 MAGENTA = (255, 0, 255)
 
 
-player = entity.Entity(RED, 15)
+player = entity.Entity(RED, 15, 1)
 
 running = True
 while running:
@@ -26,17 +26,15 @@ while running:
         if(event.type == pygame.QUIT):
             running = False
         if(event.type == pygame.KEYDOWN):
-            if event.key == pygame.K_w:
-                player.move(0, -5)
-            if event.key == pygame.K_d:
-                player.move(5, 0)
-            if event.key == pygame.K_s:
-                player.move(0, 5)
-            if event.key == pygame.K_a:
-                player.move(-5, 0)
+            player.handle_input(event.type, event.key)
+    player.do_movement()
+    
     screen.fill(CYAN)
+
+    #draw objects
     player.draw(screen)
     
+    #update screen
     pygame.display.update()
 
 
