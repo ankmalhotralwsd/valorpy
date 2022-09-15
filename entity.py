@@ -36,7 +36,6 @@ class Entity:
 
     def handle_input(self, type, key):
         if type == pygame.KEYDOWN:
-            print("KEYDOWN")
             if key == pygame.K_w:
                 self.isWPressed = True
             if key == pygame.K_s:
@@ -47,7 +46,6 @@ class Entity:
                 self.isDPressed = True
         
         if type == pygame.KEYUP:
-            print("KEYUP")
             if key == pygame.K_w:
                 self.isWPressed = False
             if key == pygame.K_s:

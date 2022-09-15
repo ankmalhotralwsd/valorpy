@@ -31,6 +31,7 @@ while running:
         if(event.type == pygame.QUIT):
             running = False
         if(event.type == pygame.KEYDOWN or event.type == pygame.KEYUP):
+            pass
             player.handle_input(event.type, event.key)
     player.do_movement()
     
