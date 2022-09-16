@@ -1,6 +1,6 @@
 import pygame
 import entity
-
+import cube
 
 pygame.init()
 screen = pygame.display.set_mode((640, 480))
@@ -23,6 +23,7 @@ MAGENTA = (255, 0, 255)
 
 entities = []
 player = entity.Entity(RED, 15, 1)
+cube = cube.Cube(320, 240, 0, 25, 25, 25)
 
 running = True
 while running:
@@ -32,14 +33,18 @@ while running:
             running = False
         if(event.type == pygame.KEYDOWN or event.type == pygame.KEYUP):
             pass
-            player.handle_input(event.type, event.key)
-    player.do_movement()
+            #player.handle_input(event.type, event.key)
+    #player.do_movement()
     
     screen.fill(CYAN)
-
+    #print(cube.get_vertices())
     #draw objects
-    player.draw(screen)
+    cube.angle=0
+    cube.rotate_y()
+    cube.draw(screen)
     
+
+
     #update screen
     pygame.display.update()
 
