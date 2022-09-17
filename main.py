@@ -3,7 +3,7 @@ import entity
 import cube
 
 pygame.init()
-screen = pygame.display.set_mode((640, 480))
+screen = pygame.display.set_mode((1024, 576))
 
 FPS = 60
 clock = pygame.time.Clock()
@@ -22,8 +22,10 @@ CYAN = (0, 255, 255)
 MAGENTA = (255, 0, 255)
 
 entities = []
-player = entity.Entity(RED, 15, 1)
-cube = cube.Cube(320, 240, 0, 25, 25, 25)
+
+cube = cube.Cube(250, 200, 0, 50, 50, 50)
+
+angle = 0
 
 running = True
 while running:
@@ -33,14 +35,11 @@ while running:
             running = False
         if(event.type == pygame.KEYDOWN or event.type == pygame.KEYUP):
             pass
-            #player.handle_input(event.type, event.key)
-    #player.do_movement()
+
     
     screen.fill(CYAN)
-    #print(cube.get_vertices())
-    #draw objects
-    cube.angle=0
-    cube.rotate_y()
+    angle += .05
+    cube.world_angle = [angle, angle, angle]
     cube.draw(screen)
     
 

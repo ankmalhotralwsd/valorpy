@@ -28,18 +28,13 @@ def weird_vector_to_matrix(a:list, b:list):
             c[i][j] = a[j] * b[i][j]
     return c
 
-def vector_x_matrix(a:list, b:list, x, y):
+def matrix_x_vector(a:list, b:list, x, y):
     c = [0, 0, 0]
-    print(a)
-    # if len(a[0]) != len(b):
-    #     print("ERROR - Can't Multiply These Dimensions")
-    #     return c
 
     for i in range(len(a)):
-        for j in range(len(b[0])):
-            for k in range(len(b)):
-                c[i] += a[k] * b[k][j]
-    print(c)
+        for k in range(len(b)):
+            c[i] += a[i][k] * b[k]
+    
     return c
 
 def convert_matrix_to_int(a:list):
@@ -52,4 +47,15 @@ def convert_vector_to_int(a:list):
     for i in range(len(a)):
         c[i] = int(a[i])
     # print (c)
+    return c
+
+
+def vector_plus_vector(a:list, b:list):
+    c = list(range(len(a)))
+    if len(a) != len(b):
+        return
+
+    for i in range(len(a)):
+        c[i] = a[i] + b[i]
+
     return c
