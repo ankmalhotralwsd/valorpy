@@ -1,4 +1,3 @@
-from ast import While
 import pygame
 import entity
 import cube
@@ -27,9 +26,9 @@ MAGENTA = (255, 0, 255)
 
 entities = []
 
-cube = cube.Cube(0, 0, 25, 50, 50, 50)
+cube = cube.Cube(0, 0, 30, 50, 50, 50)
 
-angle = 0.785398
+angle = math.radians(0)
 
 running = True
 while running:
@@ -44,9 +43,9 @@ while running:
     screen.fill(CYAN)
 
     #draw center of screen
-    pygame.draw.circle(screen, (0, 0, 0), (resolution[0]/2, resolution[1]/2), 3)
+    pygame.draw.circle(screen, (0, 0, 0), (int(resolution[0]/2), int(resolution[1]/2)), 3)
 
-    #cube.world_angle = [0, angle, 0]
+    cube.world_angle = [0, angle, 0]
     cube.draw(screen)
 
     #update screen

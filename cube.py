@@ -14,7 +14,6 @@ class Cube(Geometry):
     def init_model_space_vertices(self):
         self.model_space_vertices = weird_vector_to_matrix(self.scale, CUBE_VERTEX_MATRIX)
         self.world_space_vertices = list(self.model_space_vertices)
-        print(self.world_space_vertices)
         self.projection_space_vertices = list(self.world_space_vertices)
 
 
