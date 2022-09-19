@@ -28,8 +28,8 @@ def weird_vector_to_matrix(a:list, b:list):
             c[i][j] = a[j] * b[i][j]
     return c
 
-def matrix_x_vector(a:list, b:list, x, y):
-    c = [0, 0, 0]
+def matrix_x_vector(a:list, b:list):
+    c = list(range(len(b)))
 
     for i in range(len(a)):
         for k in range(len(b)):
@@ -50,12 +50,15 @@ def convert_vector_to_int(a:list):
     return c
 
 
-def vector_plus_vector(a:list, b:list):
+def vector_plus_vector(a:list, b:list, indices_to_skip:list):
     c = list(range(len(a)))
     if len(a) != len(b):
         return
 
     for i in range(len(a)):
-        c[i] = a[i] + b[i]
+        if i not in indices_to_skip:
+            c[i] = a[i] + b[i]
+        else:
+            c[i] = a[i]
 
     return c
