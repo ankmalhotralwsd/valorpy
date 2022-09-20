@@ -1,15 +1,14 @@
-import re
 import pygame
 import util
 import rotation_matrices
-import geometry_matrices
 import camera
-import math
 
-resolution = (1024,576)
+resolution = (1024, 576)
+width = 3
 
 class Geometry:
     def __init__(self, x, y, z, dim_x, dim_y, dim_z):
+        import run
         self.world_pos = [x, y, z, 1]
         self.scale = [dim_x, dim_y, dim_z, 1]
         self.world_angle = [0, 0, 0]
@@ -33,9 +32,13 @@ class Geometry:
         self.world_space_vertices = list(self.model_space_vertices)
         self.make_world_vertices()
 
+        # for i in range(len(self.projection_space_vertices)):
+        #     pygame.draw.circle(screen, (0, 0, 255), tuple(self.projection_space_vertices[i][:2]), 7)
+        
         for i in range(len(self.projection_space_vertices)):
-            pygame.draw.circle(screen, (0, 0, 255), tuple(self.projection_space_vertices[i][:2]), 7)
-
+            for j in range(len(self.projection_space_vertices)):
+                pygame.draw.line(screen, (0, 0, 255), tuple(self.projection_space_vertices[i][:2]), tuple(self.projection_space_vertices[j][:2]), width)
+        
 
     def make_world_vertices(self):
         for i in range(len(self.model_space_vertices)):
@@ -65,7 +68,7 @@ class Geometry:
         self.projection_space_vertices[i] = list(self.world_space_vertices[i])
         self.projection_space_vertices[i] = camera.perspective_x_coords(self.projection_space_vertices[i])
         self.projection_space_vertices[i][0] = int(self.projection_space_vertices[i][0] / self.projection_space_vertices[i][3] * (resolution[1]/2))
-        self.projection_space_vertices[i][1] = int(self.projection_space_vertices[i][1] / self.projection_space_vertices[i][3] * (resolution[1]/2))
+        self.projection_space_vertices[i][1] = int(self.projection_space_vertices[i][1] / self.projection_space_vertices[i][3] * (resolution[0]/2))
         self.projection_space_vertices[i][2] = int(self.projection_space_vertices[i][2] / self.projection_space_vertices[i][3] * (resolution[1]/2))
 
 

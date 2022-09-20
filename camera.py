@@ -3,21 +3,25 @@ import util
 import pygame
 
 resolution = (1024, 576)
+
 aspect_ratio = resolution[1]/resolution[0]
-field_of_view = 103
-field_of_view_scaling_factor = math.degrees(math.tan(math.radians(field_of_view/2)))
+field_of_view = 120
 
 yScale = 1.0 / math.tan(math.radians(field_of_view/2))
 xScale = yScale / aspect_ratio
-nearmfar = 1 - 100
+
 
 far = 100
 near = 1
+
+nearmfar = near - far
 
 class Camera:
     def __init__(self):
         Camera.world_pos = [0, 0, -1, 1]
         Camera.inverse_pos = [0, 0, -1, 1]
+
+        Camera.world_angle = [0, 0, 0]
 
         self.move_speed = 10
         self.isWPressed = False
@@ -25,10 +29,8 @@ class Camera:
         self.isSPressed = False
         self.isDPressed = False
 
-    def move(self, x, y, z):
-        Camera.world_pos[0] += x*self.move_speed
-        Camera.world_pos[1] += y*self.move_speed
-        Camera.world_pos[2] += z*self.move_speed
+        self.isUpPressed = False
+        self.isDownPressed = False
 
     @staticmethod
     def convert_to_camera_space(a):
@@ -42,6 +44,12 @@ class Camera:
         c[1] = a[1] + Camera.inverse_pos[1]
         c[2] = a[2] + Camera.inverse_pos[2]
         return c
+    
+    
+    def move(self, x, y, z):
+        Camera.world_pos[0] += x*self.move_speed
+        Camera.world_pos[1] += y*self.move_speed
+        Camera.world_pos[2] += z*self.move_speed
 
     def do_movement(self):
         if self.isWPressed:
@@ -49,9 +57,13 @@ class Camera:
         if self.isSPressed:
             self.move(0, 0, -1)
         if self.isAPressed:
-            self.move(-1, 0, 0)
-        if self.isDPressed:
             self.move(1, 0, 0)
+        if self.isDPressed:
+            self.move(-1, 0, 0)
+        if self.isUpPressed:
+            self.move(0, 1, 0)
+        if self.isDownPressed:
+            self.move(0, -1, 0)
 
     def handle_input(self, type, key):
         if type == pygame.KEYDOWN:
@@ -63,6 +75,10 @@ class Camera:
                 self.isAPressed = True
             if key == pygame.K_d:
                 self.isDPressed = True
+            if key == pygame.K_UP:
+                self.isUpPressed = True
+            if key == pygame.K_DOWN:
+                self.isDownPressed = True
         
         if type == pygame.KEYUP:
             if key == pygame.K_w:
@@ -73,6 +89,10 @@ class Camera:
                 self.isAPressed = False
             if key == pygame.K_d:
                 self.isDPressed = False
+            if key == pygame.K_UP:
+                self.isUpPressed = False
+            if key == pygame.K_DOWN:
+                self.isDownPressed = False
 
 def perspective_x_coords(a):
     PERSPECTIVE_MATRIX = [[xScale, 0, 0, 0],

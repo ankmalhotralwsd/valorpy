@@ -1,6 +1,7 @@
 def get_matrix_mul_dim(a:list, b:list) -> list:
     return [len(a), len(b[0])]
 
+
 def fill_with_zeros(x:int, y:int):
     c = []
     for i in range(x):
@@ -8,6 +9,7 @@ def fill_with_zeros(x:int, y:int):
         for j in range(y):
             c[i].append(0)
     return c
+
 
 def dot(a:list, b:list) -> list:
     c = fill_with_zeros(len(a), len(b[0]))
@@ -21,12 +23,14 @@ def dot(a:list, b:list) -> list:
                 c[i][j] += a[i][k] * b[k][j]
     return c
 
+
 def weird_vector_to_matrix(a:list, b:list):
     c = fill_with_zeros(len(b), len(b[0]))
     for i in range(len(b)):
         for j in range(len(b[0])):
             c[i][j] = a[j] * b[i][j]
     return c
+
 
 def matrix_x_vector(a:list, b:list):
     c = list(range(len(b)))
@@ -37,10 +41,12 @@ def matrix_x_vector(a:list, b:list):
     
     return c
 
+
 def convert_matrix_to_int(a:list):
     for i in range(len(a)):
         for j in range(len(a[0])):
             a[i][j] = int(a[i][j])
+
 
 def convert_vector_to_int(a:list):
     c = list(range(len(a)))
