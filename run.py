@@ -52,8 +52,8 @@ while running:
     #draw center of screen
     pygame.draw.circle(screen, (0, 0, 0), (int(resolution[0]/2), int(resolution[1]/2)), 3)
 
-    angle += 0.20
-    #cube.world_angle = [math.radians(angle), math.radians(angle), math.radians(angle)]
+    
+    cube.world_angle = [math.radians(my), math.radians(mx), 0]
     cam.do_movement()
     
     cube.draw(screen)

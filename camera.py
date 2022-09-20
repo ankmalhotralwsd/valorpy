@@ -5,7 +5,7 @@ import pygame
 resolution = (1024, 576)
 
 aspect_ratio = resolution[1]/resolution[0]
-field_of_view = 103
+field_of_view = 100
 
 yScale = 1.0 / math.tan(math.radians(field_of_view/2))
 xScale = yScale / aspect_ratio
@@ -100,3 +100,10 @@ def perspective_x_coords(a):
                             [0, 0, (far + near) / nearmfar, -1],
                             [0, 0, 2*far*near / nearmfar, 0]]
     return util.matrix_x_vector(PERSPECTIVE_MATRIX, a)
+
+def world_x_coords(a):
+    VIEW_MATRIX = [[1, 0, 0, 0],
+                            [0, 1, 0, 0],
+                            [0, 0, 1, 0],
+                            [0, 0, 0, 1]]
+    return util.matrix_x_vector(VIEW_MATRIX, a)
