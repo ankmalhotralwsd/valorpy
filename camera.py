@@ -16,8 +16,8 @@ near = 1
 
 class Camera:
     def __init__(self):
-        self.world_pos = [0, 0, -1, 1]
-        self.inverse_pos = [0, 0, -1, 1]
+        Camera.world_pos = [0, 0, -1, 1]
+        Camera.inverse_pos = [0, 0, -1, 1]
 
         self.move_speed = 10
         self.isWPressed = False
@@ -26,19 +26,21 @@ class Camera:
         self.isDPressed = False
 
     def move(self, x, y, z):
-        self.world_pos[0] += x*self.move_speed
-        self.world_pos[1] += y*self.move_speed
-        self.world_pos[2] += z*self.move_speed
+        Camera.world_pos[0] += x*self.move_speed
+        Camera.world_pos[1] += y*self.move_speed
+        Camera.world_pos[2] += z*self.move_speed
 
     @staticmethod
-    def convert_to_camera_space(self, a):
-        self.inverse_pos[0] = -self.world_pos[0]
-        self.inverse_pos[1] = -self.world_pos[1]
+    def convert_to_camera_space(a):
+        Camera.inverse_pos[0] = -Camera.world_pos[0]
+        Camera.inverse_pos[1] = -Camera.world_pos[1]
+        Camera.inverse_pos[2] = -Camera.world_pos[2]
         
         c = list(a)
 
-        c[0] = a[0] + self.inverse_pos[0]
-        c[1] = a[1] + self.inverse_pos[1]
+        c[0] = a[0] + Camera.inverse_pos[0]
+        c[1] = a[1] + Camera.inverse_pos[1]
+        c[2] = a[2] + Camera.inverse_pos[2]
         return c
 
     def do_movement(self):

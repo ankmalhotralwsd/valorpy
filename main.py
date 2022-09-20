@@ -39,7 +39,7 @@ while running:
         if(event.type == pygame.QUIT):
             running = False
         if(event.type == pygame.KEYDOWN or event.type == pygame.KEYUP):
-            pass
+            cam.handle_input(event.type, event.key)
 
     
     screen.fill(CYAN)
@@ -49,7 +49,7 @@ while running:
 
     # angle += 0.30
     # cube.world_angle = [math.radians(angle), math.radians(angle), 0]
-
+    cam.do_movement()
     cube.world_pos = [cube.world_pos[0], cube.world_pos[1]-0.01, 100, 1]
     cube.draw(screen)
 

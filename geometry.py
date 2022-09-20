@@ -34,7 +34,7 @@ class Geometry:
         self.make_world_vertices()
 
         for i in range(len(self.projection_space_vertices)):
-            pygame.draw.circle(screen, (0, 0, 255), tuple(self.projection_space_vertices[i][:2]), 1000//self.projection_space_vertices[i][2])
+            pygame.draw.circle(screen, (0, 0, 255), tuple(self.projection_space_vertices[i][:2]), 7)
 
 
     def make_world_vertices(self):
@@ -45,7 +45,7 @@ class Geometry:
 
             self.translate_model_to_world_pos(i)
 
-            self.model_space_vertices[i] = camera.Camera.convert_to_camera_space(self.model_space_vertices[i])
+            self.world_space_vertices[i] = camera.Camera.convert_to_camera_space(self.world_space_vertices[i])
             #self.convert_world_space_to_ortho_space(i)
             self.convert_world_space_to_perspective(i)
     
