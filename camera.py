@@ -5,7 +5,7 @@ import pygame
 resolution = (1024, 576)
 
 aspect_ratio = resolution[1]/resolution[0]
-field_of_view = 120
+field_of_view = 103
 
 yScale = 1.0 / math.tan(math.radians(field_of_view/2))
 xScale = yScale / aspect_ratio

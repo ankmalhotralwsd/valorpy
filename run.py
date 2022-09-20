@@ -31,8 +31,8 @@ cube = cube.Cube(0, 0, 150, 50, 50, 50)
 
 angle = math.radians(0)
 
-pygame.mouse.set_visible(False)
-pygame.event.set_grab(True)
+# pygame.mouse.set_visible(False)
+# pygame.event.set_grab(True)
 
 running = True
 while running:
@@ -53,7 +53,7 @@ while running:
     pygame.draw.circle(screen, (0, 0, 0), (int(resolution[0]/2), int(resolution[1]/2)), 3)
 
     angle += 0.20
-    cube.world_angle = [math.radians(angle), math.radians(angle), math.radians(angle)]
+    #cube.world_angle = [math.radians(angle), math.radians(angle), math.radians(angle)]
     cam.do_movement()
     
     cube.draw(screen)
