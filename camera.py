@@ -23,6 +23,11 @@ class Camera:
 
         Camera.world_angle = [0, 0, 0]
 
+        Camera.transform_matrix = [[1, 0, 0, 0],
+                                    [0, 1, 0, 0],
+                                    [0, 0, 1, 0],
+                                    [0, 0, 0, 1]]
+
         self.move_speed = 10
         self.isWPressed = False
         self.isAPressed = False
