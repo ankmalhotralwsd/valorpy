@@ -43,6 +43,7 @@ while running:
     clock.tick(FPS)
     pygame.event.set_grab(True)
     mx, my = pygame.mouse.get_pos()
+    
     for event in pygame.event.get():
         if(event.type == pygame.QUIT):
             running = False
@@ -62,7 +63,7 @@ while running:
     
     mouseY = -(my - (575/2)) / (575/2) * 180
     mouseX = (mx - (1024/2)) / (1024/2) * 180
-    print(mouseY)
+    
     camera.Camera.world_angle[0] = mouseY
     camera.Camera.world_angle[1] = mouseX
     camera.Camera.do_rotate()
@@ -71,6 +72,7 @@ while running:
     #update screen
     pygame.display.update()
 
+    
 
 pygame.quit()
 

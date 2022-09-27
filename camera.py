@@ -20,8 +20,8 @@ nearmfar = near - far
 
 class Camera:
     def __init__(self):
-        Camera.world_pos = [0, 0, -1, 1]
-        Camera.inverse_pos = [0, 0, -1, 1]
+        Camera.world_pos = [0, 0, 0, 1]
+        Camera.inverse_pos = [0, 0, 0, 1]
 
         Camera.world_angle = [math.radians(0), math.radians(0), math.radians(0)]
 
@@ -32,14 +32,14 @@ class Camera:
         Camera.unrotated_forward = [0, 0, 1, 0]
         Camera.forward = [0, 0, 1, 0]
 
-        self.move_speed = 0.5
-        self.isWPressed = False
-        self.isAPressed = False
-        self.isSPressed = False
-        self.isDPressed = False
+        Camera.move_speed = 0.5
+        Camera.isWPressed = False
+        Camera.isAPressed = False
+        Camera.isSPressed = False
+        Camera.isDPressed = False
 
-        self.isUpPressed = False
-        self.isDownPressed = False
+        Camera.isUpPressed = False
+        Camera.isDownPressed = False
 
 
 
@@ -59,61 +59,60 @@ class Camera:
     @staticmethod
     def do_rotate():
         Camera.forward = list(Camera.unrotated_forward)
-        Camera.forward = rotate_x(Camera.forward, Camera.world_angle[0])
-        Camera.forward = rotate_y(Camera.forward, Camera.world_angle[1])
-        Camera.forward = rotate_z(Camera.forward, Camera.world_angle[2])
+        Camera.forward = rotate_x(Camera.forward, math.radians(Camera.world_angle[0]))
+        Camera.forward = rotate_y(Camera.forward, math.radians(Camera.world_angle[1]))
+        Camera.forward = rotate_z(Camera.forward, math.radians(Camera.world_angle[2]))
         #print(Camera.forward)
     
-    def move(self, x, y, z):
+    def move(self, x): 
 
-        
-
-        Camera.world_pos[0] += x*self.move_speed
-        Camera.world_pos[1] += y*self.move_speed
-        Camera.world_pos[2] += z*self.move_speed
-
+        Camera.world_pos = util.vector_plus_vector(Camera.world_pos, util.vector_x_scalar(Camera.forward, x, [3]), [3]) 
+        print(Camera.forward)
     def do_movement(self):
+        Camera.do_rotate()
         if self.isWPressed:
-            self.move(0, 0, 1)
+            self.move(self.move_speed)
         if self.isSPressed:
-            self.move(0, 0, -1)
-        if self.isAPressed:
-            self.move(1, 0, 0)
-        if self.isDPressed:
-            self.move(-1, 0, 0)
-        if self.isUpPressed:
-            self.move(0, 1, 0)
-        if self.isDownPressed:
-            self.move(0, -1, 0)
+            self.move(-self.move_speed)
+        # if self.isAPressed:
+        #     self.move(1, 0, 0)
+        # if self.isDPressed:
+        #     self.move(-1, 0, 0)
+        # if self.isUpPressed:
+        #     self.move(0, 1, 0)
+        # if self.isDownPressed:
+        #     self.move(0, -1, 0)
 
-    def handle_input(self, type, key):
+    @staticmethod
+    def handle_input(type, key):
+
         if type == pygame.KEYDOWN:
             if key == pygame.K_w:
-                self.isWPressed = True
+                Camera.isWPressed = True
             if key == pygame.K_s:
-                self.isSPressed = True
+                Camera.isSPressed = True
             if key == pygame.K_a:
-                self.isAPressed = True
+                Camera.isAPressed = True
             if key == pygame.K_d:
-                self.isDPressed = True
+                Camera.isDPressed = True
             if key == pygame.K_UP:
-                self.isUpPressed = True
+                Camera.isUpPressed = True
             if key == pygame.K_DOWN:
-                self.isDownPressed = True
+                Camera.isDownPressed = True
         
         if type == pygame.KEYUP:
             if key == pygame.K_w:
-                self.isWPressed = False
+                Camera.isWPressed = False
             if key == pygame.K_s:
-                self.isSPressed = False
+                Camera.isSPressed = False
             if key == pygame.K_a:
-                self.isAPressed = False
+                Camera.isAPressed = False
             if key == pygame.K_d:
-                self.isDPressed = False
+                Camera.isDPressed = False
             if key == pygame.K_UP:
-                self.isUpPressed = False
+                Camera.isUpPressed = False
             if key == pygame.K_DOWN:
-                self.isDownPressed = False
+                Camera.isDownPressed = False
 
 def perspective_x_coords(a):
     PERSPECTIVE_MATRIX = [[xScale, 0, 0, 0],
