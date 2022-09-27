@@ -3,6 +3,8 @@ import entity
 import cube
 import math
 import camera
+import line
+import util
 
 pygame.init()
 
@@ -27,7 +29,9 @@ MAGENTA = (255, 0, 255)
 
 # instantiate entities
 cam = camera.Camera()
-cube = cube.Cube(0, 0, 150, 50, 50, 50)
+
+cube = cube.Cube(0, 0, 300, 50, 50, 50)
+line = line.Line(0, 0, 50, 0, 0, 50, (0, 0, 255))
 
 angle = math.radians(0)
 
@@ -47,7 +51,7 @@ while running:
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
     
-    screen.fill(CYAN)
+    screen.fill(GRAY)
 
     #draw center of screen
     pygame.draw.circle(screen, (0, 0, 0), (int(resolution[0]/2), int(resolution[1]/2)), 3)
@@ -56,8 +60,14 @@ while running:
     
     cam.do_movement()
     
-    cube.draw(screen)
+    mouseY = -(my - (575/2)) / (575/2) * 180
+    mouseX = (mx - (1024/2)) / (1024/2) * 180
+    print(mouseY)
+    camera.Camera.world_angle[0] = mouseY
+    camera.Camera.world_angle[1] = mouseX
+    camera.Camera.do_rotate()
 
+    cube.draw(screen)
     #update screen
     pygame.display.update()
 

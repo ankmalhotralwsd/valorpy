@@ -1,4 +1,5 @@
 import math
+from rotation_matrices import rotate_y, rotate_x, rotate_z
 import util
 import pygame
 
@@ -16,19 +17,22 @@ near = 1
 
 nearmfar = near - far
 
+
 class Camera:
     def __init__(self):
         Camera.world_pos = [0, 0, -1, 1]
         Camera.inverse_pos = [0, 0, -1, 1]
 
-        Camera.world_angle = [0, 0, 0]
+        Camera.world_angle = [math.radians(0), math.radians(0), math.radians(0)]
 
         Camera.transform_matrix = [[1, 0, 0, 0],
                                     [0, 1, 0, 0],
                                     [0, 0, 1, 0],
                                     [0, 0, 0, 1]]
+        Camera.unrotated_forward = [0, 0, 1, 0]
+        Camera.forward = [0, 0, 1, 0]
 
-        self.move_speed = 10
+        self.move_speed = 0.5
         self.isWPressed = False
         self.isAPressed = False
         self.isSPressed = False
@@ -36,6 +40,8 @@ class Camera:
 
         self.isUpPressed = False
         self.isDownPressed = False
+
+
 
     @staticmethod
     def convert_to_camera_space(a):
@@ -50,8 +56,18 @@ class Camera:
         c[2] = a[2] + Camera.inverse_pos[2]
         return c
     
+    @staticmethod
+    def do_rotate():
+        Camera.forward = list(Camera.unrotated_forward)
+        Camera.forward = rotate_x(Camera.forward, Camera.world_angle[0])
+        Camera.forward = rotate_y(Camera.forward, Camera.world_angle[1])
+        Camera.forward = rotate_z(Camera.forward, Camera.world_angle[2])
+        #print(Camera.forward)
     
     def move(self, x, y, z):
+
+        
+
         Camera.world_pos[0] += x*self.move_speed
         Camera.world_pos[1] += y*self.move_speed
         Camera.world_pos[2] += z*self.move_speed
