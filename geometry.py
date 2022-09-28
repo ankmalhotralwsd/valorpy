@@ -35,19 +35,10 @@ class Geometry:
         self.camera_space_vertices = list(self.world_space_vertices)
         self.make_world_vertices()
 
-        # for i in range(len(self.projection_space_vertices)):
-        #     pygame.draw.circle(screen, (0, 0, 255), tuple(self.projection_space_vertices[i][:2]), 7)
-        
         for i in range(len(self.projection_space_vertices)):
             for j in range(len(self.projection_space_vertices)):
                 pygame.draw.line(screen, (0, 0, 255), tuple(self.projection_space_vertices[i][:2]), tuple(self.projection_space_vertices[j][:2]), width)
-        
-        # coords = []
-
-        # for i in range(len(self.projection_space_vertices)):
-        #     coords.append(self.projection_space_vertices[i][:2])
-
-        # pygame.draw.polygon(screen, (0, 0, 255), coords)
+    
 
     def make_world_vertices(self):
         for i in range(len(self.model_space_vertices)):
@@ -55,8 +46,8 @@ class Geometry:
             self.rotate_y(self.world_angle[1], i)
             self.rotate_z(self.world_angle[2], i)
 
-            self.rotate_x(math.radians(camera.Camera.world_angle[0]), i)
-            self.rotate_y(math.radians(camera.Camera.world_angle[1]), i)
+            # self.rotate_x(math.radians(camera.Camera.world_angle[0]), i)
+            # self.rotate_y(math.radians(camera.Camera.world_angle[1]), i)
 
             self.translate_model_to_world_pos(i)
 
@@ -65,7 +56,6 @@ class Geometry:
 
             self.convert_world_to_camera_space(i)
             self.convert_camera_space_to_perspective(i)
-            #self.convert_camera_space_to_ortho_space(i)
     
 
     def translate_model_to_world_pos(self , i):
@@ -88,13 +78,9 @@ class Geometry:
 
 
         self.projection_space_vertices[i] = util.vector_plus_vector(self.projection_space_vertices[i], [resolution[0]/2, resolution[1]/2, 0, 0], [])
-        self.projection_space_vertices[i][0] = int(self.projection_space_vertices[i][0])
-        self.projection_space_vertices[i][1] = int(self.projection_space_vertices[i][1])
-        self.projection_space_vertices[i][2] = int(self.projection_space_vertices[i][2])
-        self.projection_space_vertices[i][3] = int(self.projection_space_vertices[i][3])
 
     def convert_world_to_camera_space(self, i):
         self.camera_space_vertices[i] = camera.world_x_coords(self.world_space_vertices[i])
-        #self.camera_space_vertices[i] = util.rotate_around_origin(self.camera_space_vertices[i], camera.Camera.world_angle)
-        self.camera_space_vertices[i] = rotation_matrices.rotate_x(self.camera_space_vertices[i], math.radians(camera.Camera.world_angle[0]))
-        self.camera_space_vertices[i] = rotation_matrices.rotate_y(self.camera_space_vertices[i], math.radians(camera.Camera.world_angle[1]))
+        self.camera_space_vertices[i] = util.rotate_around_origin(self.camera_space_vertices[i], camera.Camera.world_angle)
+        # self.camera_space_vertices[i] = rotation_matrices.rotate_x(self.camera_space_vertices[i], math.radians(camera.Camera.world_angle[0]))
+        # self.camera_space_vertices[i] = rotation_matrices.rotate_y(self.camera_space_vertices[i], math.radians(camera.Camera.world_angle[1]))

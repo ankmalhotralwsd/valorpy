@@ -1,4 +1,5 @@
 import math
+import camera
 
 from rotation_matrices import rotate_x, rotate_y
 def get_matrix_mul_dim(a:list, b:list) -> list:
@@ -77,6 +78,19 @@ def vector_plus_vector(a:list, b:list, indices_to_skip:list):
 
     return c
 
+def vector_minus_vector(a:list, b:list, indices_to_skip:list):
+    c = list(range(len(a)))
+    if len(a) != len(b):
+        return
+
+    for i in range(len(a)):
+        if i not in indices_to_skip:
+            c[i] = a[i] - b[i]
+        else:
+            c[i] = a[i]
+
+    return c
+
 
 def vector_x_scalar(a, b, exclude):
     c = list(range(len(a)))
@@ -94,10 +108,14 @@ def normalize_vector(a):
     magnitude = get_magnitude_of_vector(a)
     return [a[0]/magnitude, a[1]/magnitude, a[2]/magnitude, 1]
 
+
 def rotate_around_origin(a, angle):
-    normalized = normalize_vector(a)
-    magnitude = get_magnitude_of_vector(a)
+    camera_to_point = vector_minus_vector(a, camera.Camera.world_pos, [3])
+    normalized = normalize_vector(camera_to_point)
+    magnitude = get_magnitude_of_vector(camera_to_point)
+    
     normalized = rotate_x(normalized, math.radians(angle[0]))
     normalized = rotate_y(normalized, math.radians(angle[1]))
+
     vector = vector_x_scalar(normalized, magnitude, [3])
     return vector

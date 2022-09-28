@@ -41,7 +41,7 @@ angle = math.radians(0)
 running = True
 while running:
     clock.tick(FPS)
-    pygame.event.set_grab(True)
+    
     mx, my = pygame.mouse.get_pos()
     
     for event in pygame.event.get():
@@ -69,6 +69,11 @@ while running:
     camera.Camera.do_rotate()
 
     cube.draw(screen)
+
+    endpoint = util.vector_plus_vector([0, 0, 50, 1], util.vector_x_scalar(camera.Camera.forward, 5, [3]), [3])
+    line.model_space_vertices = [[0, 0, 50, 1], endpoint]
+    line.draw(screen)
+
     #update screen
     pygame.display.update()
 

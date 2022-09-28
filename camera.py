@@ -61,11 +61,8 @@ class Camera:
         Camera.forward = list(Camera.unrotated_forward)
         Camera.forward = rotate_x(Camera.forward, math.radians(Camera.world_angle[0]))
         Camera.forward = rotate_y(Camera.forward, math.radians(Camera.world_angle[1]))
-        Camera.forward = rotate_z(Camera.forward, math.radians(Camera.world_angle[2]))
-        #print(Camera.forward)
     
     def move(self, x): 
-
         Camera.world_pos = util.vector_plus_vector(Camera.world_pos, util.vector_x_scalar(Camera.forward, x, [3]), [3]) 
         print(Camera.forward)
     def do_movement(self):
