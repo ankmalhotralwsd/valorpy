@@ -29,10 +29,12 @@ class Camera:
                                     [0, 1, 0, 0],
                                     [0, 0, 1, 0],
                                     [0, 0, 0, 1]]
-        Camera.unrotated_forward = [0, 0, 1, 0]
+        Camera.unrotated_forward = [0, 0, -1, 0]
+        Camera.unrotated_right = [1, 0, 0, 0]
         Camera.forward = [0, 0, 1, 0]
+        Camera.right = [1, 0, 0, 0]
 
-        Camera.move_speed = 0.5
+        Camera.move_speed = 1
         Camera.isWPressed = False
         Camera.isAPressed = False
         Camera.isSPressed = False
@@ -61,24 +63,51 @@ class Camera:
         Camera.forward = list(Camera.unrotated_forward)
         Camera.forward = rotate_x(Camera.forward, math.radians(Camera.world_angle[0]))
         Camera.forward = rotate_y(Camera.forward, math.radians(Camera.world_angle[1]))
+        Camera.forward[2]*=-1
+
+        Camera.right = list(Camera.unrotated_right)
+        Camera.right = rotate_x(Camera.right, math.radians(Camera.world_angle[0]))
+        Camera.right = rotate_y(Camera.right, math.radians(Camera.world_angle[1]))
+        Camera.right[2]*=-1
+
+    def move(self, x, vector=None): 
+        if vector is None:
+            Camera.world_pos = util.vector_plus_vector(Camera.world_pos, util.vector_x_scalar(Camera.forward, x, [3]), [3]) 
+        else:
+            vector.world_pos = util.vector_plus_vector(vector.world_pos, util.vector_x_scalar(Camera.forward, x, [3]), [3]) 
+
+
+    def strafe(self, x, vector=None):
+        if vector is None:
+            Camera.world_pos = util.vector_plus_vector(Camera.world_pos, util.vector_x_scalar(Camera.right, x, [3]), [3]) 
+        else:
+            vector.world_pos = util.vector_plus_vector(vector.world_pos, util.vector_x_scalar(Camera.right, x, [3]), [3]) 
+
     
-    def move(self, x): 
-        Camera.world_pos = util.vector_plus_vector(Camera.world_pos, util.vector_x_scalar(Camera.forward, x, [3]), [3]) 
-        print(Camera.forward)
-    def do_movement(self):
+    def do_movement(self, vector=None):
         Camera.do_rotate()
-        if self.isWPressed:
-            self.move(self.move_speed)
-        if self.isSPressed:
-            self.move(-self.move_speed)
-        # if self.isAPressed:
-        #     self.move(1, 0, 0)
-        # if self.isDPressed:
-        #     self.move(-1, 0, 0)
-        # if self.isUpPressed:
-        #     self.move(0, 1, 0)
-        # if self.isDownPressed:
-        #     self.move(0, -1, 0)
+        if vector is not None:
+            if self.isWPressed:
+                self.move(self.move_speed, vector)
+            if self.isSPressed:
+                self.move(-self.move_speed, vector)
+        else:
+            if self.isWPressed:
+                self.move(self.move_speed)
+            if self.isSPressed:
+                self.move(-self.move_speed)
+
+
+        if vector is not None:
+            if self.isAPressed:
+                self.strafe(self.move_speed, vector)
+            if self.isDPressed:
+                self.strafe(-self.move_speed, vector)
+        else:
+            if self.isAPressed:
+                self.strafe(self.move_speed)
+            if self.isDPressed:
+                self.strafe(-self.move_speed)
 
     @staticmethod
     def handle_input(type, key):

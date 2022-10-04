@@ -117,5 +117,6 @@ def rotate_around_origin(a, angle):
     normalized = rotate_x(normalized, math.radians(angle[0]))
     normalized = rotate_y(normalized, math.radians(angle[1]))
 
+
     vector = vector_x_scalar(normalized, magnitude, [3])
     return vector
