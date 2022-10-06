@@ -110,13 +110,14 @@ def normalize_vector(a):
 
 
 def rotate_around_origin(a, angle):
-    camera_to_point = vector_minus_vector(a, camera.Camera.world_pos, [3])
+    camera_to_point = a
     normalized = normalize_vector(camera_to_point)
     magnitude = get_magnitude_of_vector(camera_to_point)
     
-    normalized = rotate_x(normalized, math.radians(angle[0]))
     normalized = rotate_y(normalized, math.radians(angle[1]))
-
+    normalized = rotate_x(normalized, math.radians(angle[0]))
+    
+    
 
     vector = vector_x_scalar(normalized, magnitude, [3])
     return vector

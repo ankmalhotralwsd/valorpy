@@ -1,9 +1,9 @@
-from this import s
 import pygame
 import util
 import rotation_matrices
 import camera
 import math
+import random
 
 resolution = (1024, 576)
 width = 1
@@ -17,7 +17,7 @@ class Geometry:
         self.world_space_vertices = list(self.model_space_vertices)
         self.projection_space_vertices = list(self.world_space_vertices)
         self.camera_space_vertices = list(self.projection_space_vertices)
-
+        self.color = (random.randint(255//2, 255), random.randint(255//2, 255), random.randint(255//2, 255))
         self.dot_size = 10 / resolution[1]
 
     def rotate_y(self, angle , i):
@@ -35,10 +35,22 @@ class Geometry:
         self.camera_space_vertices = list(self.world_space_vertices)
         self.make_world_vertices()
 
-        for i in range(len(self.projection_space_vertices)):
-            for j in range(len(self.projection_space_vertices)):
-                pygame.draw.line(screen, (0, 0, 255), tuple(self.projection_space_vertices[i][:2]), tuple(self.projection_space_vertices[j][:2]), width)
-    
+        pygame.draw.line(screen, self.color, tuple(self.projection_space_vertices[0][:2]), tuple(self.projection_space_vertices[5][:2]), width)
+        pygame.draw.line(screen, self.color, tuple(self.projection_space_vertices[0][:2]), tuple(self.projection_space_vertices[6][:2]), width)
+        pygame.draw.line(screen, self.color, tuple(self.projection_space_vertices[0][:2]), tuple(self.projection_space_vertices[7][:2]), width)
+
+        pygame.draw.line(screen, self.color, tuple(self.projection_space_vertices[1][:2]), tuple(self.projection_space_vertices[2][:2]), width)
+        pygame.draw.line(screen, self.color, tuple(self.projection_space_vertices[1][:2]), tuple(self.projection_space_vertices[3][:2]), width)
+        pygame.draw.line(screen, self.color, tuple(self.projection_space_vertices[1][:2]), tuple(self.projection_space_vertices[4][:2]), width)
+
+        pygame.draw.line(screen, self.color, tuple(self.projection_space_vertices[7][:2]), tuple(self.projection_space_vertices[4][:2]), width)
+        pygame.draw.line(screen, self.color, tuple(self.projection_space_vertices[7][:2]), tuple(self.projection_space_vertices[2][:2]), width)
+
+        pygame.draw.line(screen, self.color, tuple(self.projection_space_vertices[6][:2]), tuple(self.projection_space_vertices[2][:2]), width)
+        pygame.draw.line(screen, self.color, tuple(self.projection_space_vertices[4][:2]), tuple(self.projection_space_vertices[5][:2]), width)
+        pygame.draw.line(screen, self.color, tuple(self.projection_space_vertices[3][:2]), tuple(self.projection_space_vertices[5][:2]), width)
+                
+        pygame.draw.line(screen, self.color, tuple(self.projection_space_vertices[3][:2]), tuple(self.projection_space_vertices[6][:2]), width)
 
     def make_world_vertices(self):
         for i in range(len(self.model_space_vertices)):
@@ -83,7 +95,9 @@ class Geometry:
         self.projection_space_vertices[i] = util.vector_plus_vector(self.projection_space_vertices[i], [resolution[0]/2, resolution[1]/2, 0, 0], [])
 
     def convert_world_to_camera_space(self, i):
-        self.camera_space_vertices[i] = camera.world_x_coords(self.world_space_vertices[i])
+        # self.camera_space_vertices[i][0] += camera.Camera.inverse_pos[0]
+        # self.camera_space_vertices[i][1] += camera.Camera.inverse_pos[1]
+        # self.camera_space_vertices[i][2] += camera.Camera.inverse_pos[2]
         self.camera_space_vertices[i] = util.rotate_around_origin(self.camera_space_vertices[i], camera.Camera.world_angle)
         # self.camera_space_vertices[i] = rotation_matrices.rotate_x(self.camera_space_vertices[i], math.radians(camera.Camera.world_angle[0]))
         # self.camera_space_vertices[i] = rotation_matrices.rotate_y(self.camera_space_vertices[i], math.radians(camera.Camera.world_angle[1]))

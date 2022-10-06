@@ -30,7 +30,15 @@ MAGENTA = (255, 0, 255)
 # instantiate entities
 cam = camera.Camera()
 
-cube = cube.Cube(0, 0, 300, 50, 50, 50)
+
+
+cubes = []
+
+for x in range(1):
+    for z in range(1):
+        cubes.append(cube.Cube(x*100, -100, z*100, 50, 50, 50))
+
+
 line = line.Line(0, 0, 50, 0, 0, 50, (0, 0, 255))
 
 angle = math.radians(0)
@@ -67,25 +75,19 @@ while running:
     screen.fill(BLACK)
 
     #draw center of screen
-    pygame.draw.circle(screen, (0, 0, 0), (int(resolution[0]/2), int(resolution[1]/2)), 3)
+    pygame.draw.circle(screen, (200, 200, 200), (int(resolution[0]/2), int(resolution[1]/2)), 1)
 
 
     
     camera.Camera.world_angle[0] += -delta_my * sens
     camera.Camera.world_angle[1] += delta_mx * sens
     camera.Camera.do_rotate()
-
-    #cube.world_angle[0] = math.radians(mouseY)
-    #cube.world_angle[1] = math.radians(mouseX)
     cam.do_movement()
 
-    # camera.Camera.move_obj_camera_forward(cube, 5)
+    # cube.draw(screen)
 
-    cube.draw(screen)
-
-    # endpoint = util.vector_plus_vector([0, 0, 50, 1], util.vector_x_scalar(camera.Camera.forward, 5, [3]), [3])
-    # line.model_space_vertices = [[0, 0, 50, 1], endpoint]
-    # line.draw(screen)
+    for i in range(len(cubes)):
+        cubes[i].draw(screen)
 
     #update screen
     pygame.display.update()
