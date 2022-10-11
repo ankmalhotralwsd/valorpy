@@ -1,10 +1,10 @@
 import math
 import util
-import geometry_matrices
+import mesh
 import rotation_matrices
 
 scale = [25, 25, 25]
-vertices = util.weird_vector_to_matrix(scale, geometry_matrices.CUBE_VERTEX_MATRIX)
+vertices = util.weird_vector_to_matrix(scale, mesh.CUBE_VERTICES)
 angle = 0
 
 rotated_vertices = vertices

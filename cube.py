@@ -1,5 +1,5 @@
 import util
-import geometry_matrices
+import mesh
 import geometry
 
 
@@ -9,7 +9,7 @@ class Cube(geometry.Geometry):
         self.init_model_space_vertices()
         
     def init_model_space_vertices(self):
-        self.model_space_vertices = util.weird_vector_to_matrix(self.scale, geometry_matrices.CUBE_VERTEX_MATRIX)
+        self.model_space_vertices = util.weird_vector_to_matrix(self.scale, mesh.CUBE_VERTICES)
         self.world_space_vertices = list(self.model_space_vertices)
         self.projection_space_vertices = list(self.world_space_vertices)
 
