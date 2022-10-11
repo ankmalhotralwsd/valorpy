@@ -1,3 +1,4 @@
+from copy import deepcopy
 import util
 import mesh
 import geometry
@@ -9,11 +10,16 @@ class Cube(geometry.Geometry):
         self.init_model_space_vertices()
         
     def init_model_space_vertices(self):
-        self.model_space_vertices = util.weird_vector_to_matrix(self.scale, mesh.CUBE_VERTICES)
-        self.world_space_vertices = list(self.model_space_vertices)
-        self.projection_space_vertices = list(self.world_space_vertices)
+        self.mesh = mesh.CUBE_MESH
+        self.model_space_tris = list(self.mesh.tris)
 
+        for i in range(len(self.model_space_tris)):
+                self.model_space_tris[i] = util.weird_vector_to_matrix(self.scale, self.model_space_tris[i])
 
+        self.world_space_tris = list(self.model_space_tris)
+        self.projection_space_tris = list(self.world_space_tris)
+
+        print(self.projection_space_tris)
     
         
         
