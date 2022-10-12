@@ -21,6 +21,7 @@ class Geometry:
         self.world_space_faces = deepcopy(self.model_space_faces)
         self.projection_space_faces = deepcopy(self.world_space_faces)
         self.camera_space_faces = deepcopy(self.projection_space_faces)
+        self.xy_coords = deepcopy(self.projection_space_faces)
 
         self.faces = []
 
@@ -46,6 +47,14 @@ class Geometry:
         self.camera_space_faces = deepcopy(self.world_space_faces)
         self.make_world_faces()
 
+        
+        # for i in range(len(self.projection_space_faces)):
+        #     self.xy_coords = deepcopy(self.projection_space_faces)
+        #     for x in range(len(self.projection_space_faces[i])):
+        #         self.xy_coords[i][x] = self.projection_space_faces[i][x][:2]
+        #     pygame.draw.polygon(screen, self.color, self.xy_coords[i])
+        
+
         for i in range(len(self.projection_space_faces)):
             if len(self.projection_space_faces[i]) == 4:
                 pygame.draw.line(screen, self.color, tuple(self.projection_space_faces[i][0][:2]), tuple(self.projection_space_faces[i][1][:2]), width)
@@ -56,7 +65,8 @@ class Geometry:
                 pygame.draw.line(screen, self.color, tuple(self.projection_space_faces[i][0][:2]), tuple(self.projection_space_faces[i][1][:2]), width)
                 pygame.draw.line(screen, self.color, tuple(self.projection_space_faces[i][1][:2]), tuple(self.projection_space_faces[i][2][:2]), width)
                 pygame.draw.line(screen, self.color, tuple(self.projection_space_faces[i][2][:2]), tuple(self.projection_space_faces[i][0][:2]), width)
-
+            
+        
             
 
     def make_world_faces(self):
