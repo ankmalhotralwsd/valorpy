@@ -8,7 +8,6 @@ from obj_processing import return_faces_through_file
 
 class Mesh:
     def __init__(self):
-        self.tris = []
         self.faces = []
 
 
