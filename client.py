@@ -6,13 +6,7 @@ import camera
 import line
 import util
 
-pygame.init()
 
-resolution = (1024, 576)
-screen = pygame.display.set_mode(resolution)
-
-FPS = 60
-clock = pygame.time.Clock()
 
 
 BLACK = (0, 0, 0)
@@ -36,15 +30,16 @@ cubes = []
 
 for x in range(1):
     for z in range(1):
-        cubes.append(cube.Cube(x*100, -100, z*100, 50, 50, 50))
+        cubes.append(cube.Cube(x*100, -100, z*100, .5, .5, .5))
 
 
-line = line.Line(0, 0, 50, 0, 0, 50, (0, 0, 255))
+pygame.init()
 
-angle = math.radians(0)
+resolution = (1024, 576)
+screen = pygame.display.set_mode(resolution)
 
-# pygame.mouse.set_visible(False)
-# pygame.event.set_grab(True)
+FPS = 60
+clock = pygame.time.Clock()
 
 mx = resolution[0]/2
 my = resolution[1]/2

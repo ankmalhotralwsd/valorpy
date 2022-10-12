@@ -11,15 +11,13 @@ class Cube(geometry.Geometry):
         
     def init_model_space_vertices(self):
         self.mesh = mesh.CUBE_MESH
-        self.model_space_tris = list(self.mesh.tris)
+        self.model_space_faces = list(self.mesh.faces)
 
-        for i in range(len(self.model_space_tris)):
-                self.model_space_tris[i] = util.weird_vector_to_matrix(self.scale, self.model_space_tris[i])
+        for i in range(len(self.model_space_faces)):
+                self.model_space_faces[i] = util.weird_vector_to_matrix(self.scale, self.model_space_faces[i])
 
-        self.world_space_tris = list(self.model_space_tris)
-        self.projection_space_tris = list(self.world_space_tris)
-
-        print(self.projection_space_tris)
+        self.world_space_faces = list(self.model_space_faces)
+        self.projection_space_faces = list(self.world_space_faces)
     
         
         

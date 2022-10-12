@@ -13,4 +13,3 @@ while True:
     angle += .0001
     for i in range(len(vertices)):
         rotated_vertices[i] = rotation_matrices.rotate_y(vertices[i], angle, 1, 3)
-    print(rotated_vertices)
