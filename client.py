@@ -30,7 +30,8 @@ cubes = []
 
 for x in range(1):
     for z in range(1):
-        cubes.append(cube.Cube(x*100, 0, z*100 + 50, .3, .3, .3))
+        cubes.append(cube.Cube(x*100, 0, x*100 + 150.1, 1, 1, 1))
+
 
 
 pygame.init()

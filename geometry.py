@@ -20,7 +20,9 @@ class Geometry:
         self.model_space_faces = []
         self.faces = []
 
-        self.color = (random.randint(255//10, 255), random.randint(255//10, 255), random.randint(255//10, 255))
+        self.faces_xy = []
+
+        self.colors = []
         self.dot_size = 10 / resolution[1]
 
     def rotate_y(self, angle , i):
@@ -39,22 +41,36 @@ class Geometry:
 
     def draw(self, screen):
         self.faces = deepcopy(self.model_space_faces)
+        self.faces_xy = []
         # self.camera_space_faces = deepcopy(self.world_space_faces)
         self.make_world_faces()
     
 
-        for i in range(len(self.faces)):
-            if len(self.faces[i]) == 4:
-                pygame.draw.line(screen, self.color, tuple(self.faces[i][0][:2]), tuple(self.faces[i][1][:2]), width)
-                pygame.draw.line(screen, self.color, tuple(self.faces[i][1][:2]), tuple(self.faces[i][2][:2]), width)
-                pygame.draw.line(screen, self.color, tuple(self.faces[i][2][:2]), tuple(self.faces[i][3][:2]), width)
-                pygame.draw.line(screen, self.color, tuple(self.faces[i][3][:2]), tuple(self.faces[i][0][:2]), width)
-            else:
-                pygame.draw.line(screen, self.color, tuple(self.faces[i][0][:2]), tuple(self.faces[i][1][:2]), width)
-                pygame.draw.line(screen, self.color, tuple(self.faces[i][1][:2]), tuple(self.faces[i][2][:2]), width)
-                pygame.draw.line(screen, self.color, tuple(self.faces[i][2][:2]), tuple(self.faces[i][0][:2]), width)
+        # for i in range(len(self.faces)):
+        #     if len(self.faces[i]) == 4:
+        #         pygame.draw.line(screen, self.color, tuple(self.faces[i][0][:2]), tuple(self.faces[i][1][:2]), width)
+        #         pygame.draw.line(screen, self.color, tuple(self.faces[i][1][:2]), tuple(self.faces[i][2][:2]), width)
+        #         pygame.draw.line(screen, self.color, tuple(self.faces[i][2][:2]), tuple(self.faces[i][3][:2]), width)
+        #         pygame.draw.line(screen, self.color, tuple(self.faces[i][3][:2]), tuple(self.faces[i][0][:2]), width)
+        #     else:
+        #         pygame.draw.line(screen, self.color, tuple(self.faces[i][0][:2]), tuple(self.faces[i][1][:2]), width)
+        #         pygame.draw.line(screen, self.color, tuple(self.faces[i][1][:2]), tuple(self.faces[i][2][:2]), width)
+        #         pygame.draw.line(screen, self.color, tuple(self.faces[i][2][:2]), tuple(self.faces[i][0][:2]), width)
             
-        
+        for i in range(len(self.faces)):
+            face = []
+            if len(self.faces[i]) == 4:
+                face.append(self.faces[i][0][:2])
+                face.append(self.faces[i][1][:2])
+                face.append(self.faces[i][2][:2])
+                face.append(self.faces[i][3][:2])
+
+            else:
+                face.append(self.faces[i][0][:2])
+                face.append(self.faces[i][1][:2])
+                face.append(self.faces[i][2][:2])
+            pygame.draw.polygon(screen, self.colors[i], face)
+
             
 
     def make_world_faces(self):
@@ -83,6 +99,8 @@ class Geometry:
         for x in range(len(self.faces[i])):
             self.faces[i][x] = camera.perspective_x_coords(self.faces[i][x])
 
+
+            
             self.faces[i][x][0] = int(self.faces[i][x][0] / self.faces[i][x][3] * (resolution[1]))
             self.faces[i][x][1] = int(self.faces[i][x][1] / self.faces[i][x][3] * (resolution[0]))
             self.faces[i][x][2] = int(self.faces[i][x][2] / self.faces[i][x][3] * (resolution[1]))

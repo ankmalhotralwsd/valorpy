@@ -19,7 +19,7 @@ class Cube(geometry.Geometry):
         # self.world_space_faces = list(self.model_space_faces)
         # self.projection_space_faces = list(self.world_space_faces)
 
-
+        self.colors = deepcopy(self.mesh.colors)
         self.model_space_faces = deepcopy(self.mesh.faces)
         for i in range(len(self.model_space_faces)):
             self.model_space_faces[i] = util.weird_vector_to_matrix(self.scale, self.model_space_faces[i])
