@@ -1,6 +1,5 @@
 import pygame
 import util
-import rotation_matrices
 import camera
 
 resolution = (1024, 576)

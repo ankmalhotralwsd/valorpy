@@ -3,9 +3,6 @@ import pygame
 import util
 import rotation_matrices
 import camera
-import math
-import random
-import mesh
 
 resolution = (1024, 576)
 width = 1
@@ -23,6 +20,7 @@ class Geometry:
         self.faces_xy = []
 
         self.colors = []
+        self.color = (255, 255, 255)
         self.dot_size = 10 / resolution[1]
 
     def rotate_y(self, angle , i):
@@ -45,18 +43,23 @@ class Geometry:
         # self.camera_space_faces = deepcopy(self.world_space_faces)
         self.make_world_faces()
     
+        self.render(screen, True)
+        
 
-        # for i in range(len(self.faces)):
-        #     if len(self.faces[i]) == 4:
-        #         pygame.draw.line(screen, self.color, tuple(self.faces[i][0][:2]), tuple(self.faces[i][1][:2]), width)
-        #         pygame.draw.line(screen, self.color, tuple(self.faces[i][1][:2]), tuple(self.faces[i][2][:2]), width)
-        #         pygame.draw.line(screen, self.color, tuple(self.faces[i][2][:2]), tuple(self.faces[i][3][:2]), width)
-        #         pygame.draw.line(screen, self.color, tuple(self.faces[i][3][:2]), tuple(self.faces[i][0][:2]), width)
-        #     else:
-        #         pygame.draw.line(screen, self.color, tuple(self.faces[i][0][:2]), tuple(self.faces[i][1][:2]), width)
-        #         pygame.draw.line(screen, self.color, tuple(self.faces[i][1][:2]), tuple(self.faces[i][2][:2]), width)
-        #         pygame.draw.line(screen, self.color, tuple(self.faces[i][2][:2]), tuple(self.faces[i][0][:2]), width)
-            
+    def render(self, screen, wireframe):
+        if wireframe:
+            for i in range(len(self.faces)):
+                if len(self.faces[i]) == 4:
+                    pygame.draw.aaline(screen, self.color, tuple(self.faces[i][0][:2]), tuple(self.faces[i][1][:2]), width)
+                    pygame.draw.aaline(screen, self.color, tuple(self.faces[i][1][:2]), tuple(self.faces[i][2][:2]), width)
+                    pygame.draw.aaline(screen, self.color, tuple(self.faces[i][2][:2]), tuple(self.faces[i][3][:2]), width)
+                    pygame.draw.aaline(screen, self.color, tuple(self.faces[i][3][:2]), tuple(self.faces[i][0][:2]), width)
+                else:
+                    pygame.draw.aaline(screen, self.color, tuple(self.faces[i][0][:2]), tuple(self.faces[i][1][:2]), width)
+                    pygame.draw.aaline(screen, self.color, tuple(self.faces[i][1][:2]), tuple(self.faces[i][2][:2]), width)
+                    pygame.draw.aaline(screen, self.color, tuple(self.faces[i][2][:2]), tuple(self.faces[i][0][:2]), width)
+            return
+
         for i in range(len(self.faces)):
             face = []
             if len(self.faces[i]) == 4:
@@ -70,8 +73,6 @@ class Geometry:
                 face.append(self.faces[i][1][:2])
                 face.append(self.faces[i][2][:2])
             pygame.draw.polygon(screen, self.colors[i], face)
-
-            
 
     def make_world_faces(self):
         for i in range(len(self.faces)):

@@ -1,13 +1,9 @@
+from pygame.locals import *
 import pygame
-import entity
-import cube
-import math
 import camera
-import line
-import util
-
-
-
+from object import Object
+import mesh
+from util import fill_with_zeros
 
 BLACK = (0, 0, 0)
 GRAY = (127, 127, 127)
@@ -24,20 +20,26 @@ MAGENTA = (255, 0, 255)
 # instantiate entities
 cam = camera.Camera()
 
-
-
-cubes = []
+objects = []
 
 for x in range(1):
     for z in range(1):
-        cubes.append(cube.Cube(x*100, 0, x*100 + 150.1, 1, 1, 1))
+        objects.append(Object(x*100, 0, x*100 + 150.1, 1, 1, 1, mesh.CHICKEN_MESH))
 
 
 
 pygame.init()
 
+
+flags = FULLSCREEN | DOUBLEBUF
 resolution = (1024, 576)
 screen = pygame.display.set_mode(resolution)
+
+SURFACE_PIXEL_ARRAY = fill_with_zeros(1024, 576)
+
+for i in range(len(SURFACE_PIXEL_ARRAY)):
+    for k in range(len(SURFACE_PIXEL_ARRAY[0])):
+        SURFACE_PIXEL_ARRAY[i][k] = (255, 255, 255)
 
 FPS = 60
 clock = pygame.time.Clock()
@@ -68,10 +70,10 @@ while running:
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
     
-    screen.fill(BLACK)
+    # screen.fill(BLACK)
 
     #draw center of screen
-    pygame.draw.circle(screen, (200, 200, 200), (int(resolution[0]/2), int(resolution[1]/2)), 1)
+    # pygame.draw.circle(screen, (200, 200, 200), (int(resolution[0]/2), int(resolution[1]/2)), 1)
 
 
     
@@ -82,9 +84,12 @@ while running:
 
     # cube.draw(screen)
 
-    for i in range(len(cubes)):
-        cubes[i].draw(screen)
-
+    # for i in range(len(objects)):
+    #     objects[i].draw(screen)
+    screen.lock()
+    pxarray = pygame.PixelArray(screen)
+    pxarray = SURFACE_PIXEL_ARRAY
+    screen.unlock()
     #update screen
     pygame.display.update()
 

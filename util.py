@@ -1,7 +1,6 @@
 import math
-import camera
+import rotation_matrices
 
-from rotation_matrices import rotate_x, rotate_y
 def get_matrix_mul_dim(a:list, b:list) -> list:
     return [len(a), len(b[0])]
 
@@ -114,8 +113,8 @@ def rotate_around_origin(a, angle):
     normalized = normalize_vector(camera_to_point)
     magnitude = get_magnitude_of_vector(camera_to_point)
     
-    normalized = rotate_y(normalized, math.radians(angle[1]))
-    normalized = rotate_x(normalized, math.radians(angle[0]))
+    normalized = rotation_matrices.rotate_y(normalized, math.radians(angle[1]))
+    normalized = rotation_matrices.rotate_x(normalized, math.radians(angle[0]))
     
     
 
