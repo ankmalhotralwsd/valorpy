@@ -1,10 +1,17 @@
 import re
+import numpy as np
+from numpy import float32
 
 def return_faces_through_file(file):
     vertices = []
     face_indices = []
     faces = []
 
+    
+    quads = []
+    tris = []
+    quad_indices = []
+    tri_indices = []
 
     in_file = open(file)
     line = in_file.readline()
@@ -17,21 +24,23 @@ def return_faces_through_file(file):
             vertices.append([float(l[1]), float(l[2]), float(l[3]), 1])
         elif l[0] == "f":
             if len(l)==5:
-                face_indices.append([int(l[1].split("/")[0])-1, int(l[2].split("/")[0])-1, int(l[3].split("/")[0])-1, int(l[4].split("/")[0])-1])
+                quad_indices.append([int(l[1].split("/")[0])-1, int(l[2].split("/")[0])-1, int(l[3].split("/")[0])-1, int(l[4].split("/")[0])-1])
             else:
-                face_indices.append([int(l[1].split("/")[0])-1, int(l[2].split("/")[0])-1, int(l[3].split("/")[0])-1])
+                tri_indices.append([int(l[1].split("/")[0])-1, int(l[2].split("/")[0])-1, int(l[3].split("/")[0])-1])
         line = in_file.readline()
         line_num += 1
 
 
-    for i in range(len(face_indices)):
-        face = []
-        if len(face_indices[i]) == 4:
-            face = [vertices[face_indices[i][0]], vertices[face_indices[i][1]], vertices[face_indices[i][2]], vertices[face_indices[i][3]]]
-        else:
-            face = [vertices[face_indices[i][0]], vertices[face_indices[i][1]], vertices[face_indices[i][2]]]
+    for i in range(len(quad_indices)):
+        quad = []
+        if len(quad_indices[i]) == 4:
+            quad = [vertices[quad_indices[i][0]], vertices[quad_indices[i][1]], vertices[quad_indices[i][2]], vertices[quad_indices[i][3]]]
+        quads.append(quad)
 
-        faces.append(face)
+    for i in range(len(tri_indices)):
+        tri = []
+        if len(tri_indices[i]) == 3:
+            tri = [vertices[tri_indices[i][0]], vertices[tri_indices[i][1]], vertices[tri_indices[i][2]]]
+        tris.append(tri)
 
-
-    return faces
+    return np.array(quads, dtype=np.float32), np.array(tris, dtype=np.float32)

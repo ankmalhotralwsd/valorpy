@@ -1,5 +1,6 @@
 import math
 import rotation_matrices
+import numpy as np
 
 def get_matrix_mul_dim(a:list, b:list) -> list:
     return [len(a), len(b[0])]
@@ -48,6 +49,7 @@ def matrix_x_vector(a:list, b:list):
             c[i] += a[i][k] * b[k]
     
     return c
+    
 
 
 def convert_matrix_to_int(a:list):

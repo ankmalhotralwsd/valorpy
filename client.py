@@ -1,6 +1,6 @@
 from pygame.locals import *
 import pygame
-import camera
+import camera, debug_menu
 from object import Object
 import mesh
 from util import fill_with_zeros
@@ -35,14 +35,9 @@ flags = FULLSCREEN | DOUBLEBUF
 resolution = (1024, 576)
 screen = pygame.display.set_mode(resolution)
 
-SURFACE_PIXEL_ARRAY = fill_with_zeros(1024, 576)
-
-for i in range(len(SURFACE_PIXEL_ARRAY)):
-    for k in range(len(SURFACE_PIXEL_ARRAY[0])):
-        SURFACE_PIXEL_ARRAY[i][k] = (255, 255, 255)
 
 FPS = 60
-clock = pygame.time.Clock()
+clock = debug_menu.Clock(60)
 
 mx = resolution[0]/2
 my = resolution[1]/2
@@ -54,7 +49,7 @@ running = True
 pygame.mouse.set_pos((resolution[0]/2, resolution[1]/2))
 
 while running:
-    clock.tick(FPS)
+    clock.tick()
     last_mx = mx
     last_my = my
     mx, my = pygame.mouse.get_pos()
@@ -70,10 +65,10 @@ while running:
             if event.key == pygame.K_ESCAPE:
                 pygame.quit()
     
-    # screen.fill(BLACK)
+    screen.fill(BLACK)
 
     #draw center of screen
-    # pygame.draw.circle(screen, (200, 200, 200), (int(resolution[0]/2), int(resolution[1]/2)), 1)
+    pygame.draw.circle(screen, (200, 200, 200), (int(resolution[0]/2), int(resolution[1]/2)), 1)
 
 
     
@@ -84,13 +79,11 @@ while running:
 
     # cube.draw(screen)
 
-    # for i in range(len(objects)):
-    #     objects[i].draw(screen)
-    screen.lock()
-    pxarray = pygame.PixelArray(screen)
-    pxarray = SURFACE_PIXEL_ARRAY
-    screen.unlock()
+    for i in range(len(objects)):
+        objects[i].draw(screen)
+
     #update screen
+    clock.render(screen)
     pygame.display.update()
 
     

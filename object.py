@@ -2,6 +2,7 @@ from copy import deepcopy
 import util
 import mesh
 import geometry
+import numpy as np
 
 
 class Object(geometry.Geometry):
@@ -11,7 +12,7 @@ class Object(geometry.Geometry):
         self.init_model_space_vertices()
     def init_model_space_vertices(self):
         self.colors = deepcopy(self.mesh.colors)
-        self.model_space_faces = deepcopy(self.mesh.faces)
+        self.model_space_faces = np.copy(self.mesh.faces)
         for i in range(len(self.model_space_faces)):
             self.model_space_faces[i] = util.weird_vector_to_matrix(self.scale, self.model_space_faces[i])
         

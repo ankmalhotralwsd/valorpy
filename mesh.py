@@ -3,6 +3,7 @@
 #BOTTOM LEFT TO TOP RIGHT
 from obj_processing import return_faces_through_file
 import random
+import numpy as np
 
 def get_avg_z(face):
     sum = 0
@@ -12,9 +13,9 @@ def get_avg_z(face):
 
 class Mesh:
     def __init__(self, file_faces):
-        self.faces = file_faces
+        self.faces, self.tris = file_faces
 
-        self.faces = sorted(self.faces, key=lambda face: get_avg_z(face), reverse=False)
+
 
         self.colors = []
         for i in range(len(self.faces)):
