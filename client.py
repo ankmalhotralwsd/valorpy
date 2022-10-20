@@ -31,13 +31,12 @@ for x in range(1):
 pygame.init()
 
 
-flags = FULLSCREEN | DOUBLEBUF
 resolution = (1024, 576)
 screen = pygame.display.set_mode(resolution)
 
 
-FPS = 60
-clock = debug_menu.Clock(60)
+FPS = 6000
+clock = debug_menu.Clock(60000)
 
 mx = resolution[0]/2
 my = resolution[1]/2

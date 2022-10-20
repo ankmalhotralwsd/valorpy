@@ -1,6 +1,5 @@
 import re
 import numpy as np
-from numpy import float32
 
 def return_faces_through_file(file):
     vertices = []
@@ -43,4 +42,4 @@ def return_faces_through_file(file):
             tri = [vertices[tri_indices[i][0]], vertices[tri_indices[i][1]], vertices[tri_indices[i][2]]]
         tris.append(tri)
 
-    return np.array(quads, dtype=np.float32), np.array(tris, dtype=np.float32)
+    return np.array(quads, dtype=np.float64), np.array(tris, dtype=np.float64)

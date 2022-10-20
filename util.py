@@ -20,18 +20,6 @@ def fill_vector_zero(x):
         c.append(0)
     return c
 
-def dot(a:list, b:list) -> list:
-    c = fill_with_zeros(len(a), len(b[0]))
-    if len(a[0]) != len(b):
-        print("ERROR - Can't Multiply These Dimensions")
-        return c
-
-    for i in range(len(a)):
-        for j in range(len(b[0])):
-            for k in range(len(b)):
-                c[i][j] += a[i][k] * b[k][j]
-    return c
-
 
 def weird_vector_to_matrix(a:list, b:list):
     c = fill_with_zeros(len(b), len(b[0]))
@@ -41,14 +29,14 @@ def weird_vector_to_matrix(a:list, b:list):
     return c
 
 
-def matrix_x_vector(a:list, b:list):
-    c = fill_vector_zero(len(a))
+def matrix_x_vector(a, b):
+    # c = fill_vector_zero(len(a))
 
-    for i in range(len(a)):
-        for k in range(len(b)):
-            c[i] += a[i][k] * b[k]
-    
-    return c
+    # for i in range(len(a)):
+    #     for k in range(len(b)):
+    #         c[i] += a[i][k] * b[k]
+    # return c
+    return np.dot(a, b)
     
 
 

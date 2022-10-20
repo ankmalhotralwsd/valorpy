@@ -11,13 +11,6 @@ class Cube(geometry.Geometry):
         
     def init_model_space_vertices(self):
         self.mesh = mesh.CUBE_MESH
-        # self.model_space_faces = list(self.mesh.faces)
-
-        # for i in range(len(self.model_space_faces)):
-        #         self.model_space_faces[i] = util.weird_vector_to_matrix(self.scale, self.model_space_faces[i])
-
-        # self.world_space_faces = list(self.model_space_faces)
-        # self.projection_space_faces = list(self.world_space_faces)
 
         self.colors = deepcopy(self.mesh.colors)
         self.model_space_faces = deepcopy(self.mesh.faces)

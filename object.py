@@ -16,7 +16,7 @@ class Object(geometry.Geometry):
         for i in range(len(self.model_space_faces)):
             self.model_space_faces[i] = util.weird_vector_to_matrix(self.scale, self.model_space_faces[i])
         
-        self.faces = deepcopy(self.model_space_faces)
+        self.faces = np.copy(self.model_space_faces)
         
     
         

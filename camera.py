@@ -2,6 +2,7 @@ import math
 from rotation_matrices import rotate_y, rotate_x, rotate_z
 import util
 import pygame
+import numpy as np
 
 resolution = (1024, 576)
 
